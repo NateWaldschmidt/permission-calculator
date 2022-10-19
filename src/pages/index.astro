@@ -1,0 +1,25 @@
+---
+/** The name of the application to be used throughout the site. */
+const applicationName = 'Developer Toolkit';
+---
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} />
+        <title>Home | { applicationName }</title>
+    </head>
+    <body>
+        <h1>{ applicationName }</h1>
+    </body>
+</html>
+
+<style lang="scss">
+    body {
+        h1 {
+            color: red;
+        }
+    }
+</style>
