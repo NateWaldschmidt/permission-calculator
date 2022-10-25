@@ -1,6 +1,9 @@
 ---
 /** The name of the application to be used throughout the site. */
 const applicationName = 'Developer Toolkit';
+const pageTitle = 'Permission Calculator';
+
+import PermissionCalculator from '@components/permission-calculator.svelte';
 ---
 
 <html lang="en">
@@ -9,17 +12,24 @@ const applicationName = 'Developer Toolkit';
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <meta name="viewport" content="width=device-width" />
         <meta name="generator" content={Astro.generator} />
-        <title>Home | { applicationName }</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet"> 
+        <title>{ pageTitle } | { applicationName }</title>
     </head>
     <body>
-        <h1>{ applicationName }</h1>
+        <h1>{ pageTitle }</h1>
+        <PermissionCalculator client:load></PermissionCalculator>
     </body>
 </html>
 
 <style lang="scss">
     body {
+        font-family: 'Ubuntu', sans-serif;
+
         h1 {
-            color: red;
+            color: purple;
+            text-align: center;
         }
     }
 </style>
