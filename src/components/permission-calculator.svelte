@@ -185,6 +185,9 @@
 
             border-radius: 0.125rem;
             background-color: #d7beeb;
+
+            transition: background-color 300ms ease,
+            color 300ms ease;
         }
 
         input[type="checkbox"] {
@@ -194,6 +197,19 @@
             &:checked + label {
                 color: white;
                 background-color: #943FE4;
+
+                animation: bounce-up 200ms ease;
+
+                @keyframes bounce-up {
+                    50% { transform: scale(1.05) }
+                }
+            }
+            &:not(:checked) + label {
+                animation: bounce-down 200ms ease-out;
+
+                @keyframes bounce-down {
+                    50% { transform: scale(0.95) }
+                }
             }
         }
     }
