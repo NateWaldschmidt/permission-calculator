@@ -16,6 +16,33 @@
         }
         return decimalPermission;
     })()
+    /**
+     * Converts the decimal permission into the necessary binary permission.
+     * 
+     * @param this
+     */
+    function decimalToBinaryPerm(this: HTMLInputElement) {
+        let decimalPerms = this.value.split('');
+        // Ensures the array has 3 numbers.
+        if (decimalPerms.length < 3) {
+            return;
+        }
+
+        /** A temporary place to set permissions to allow updating all after calcs. */
+        let tempPermission = [...permission];
+
+        /** Convert the array to binary. */
+        decimalPerms.forEach((decimalPerm: string, decimalIndex: number) => {
+            const binaryPerm = Number.parseInt(decimalPerm).toString(2).padStart(3, '0');
+            
+            binaryPerm.split('').forEach((binPerm: string, binaryIndex: number) => {
+                const tempPermIndex = binaryIndex + decimalIndex * 3;
+                tempPermission[tempPermIndex] = binPerm === '1' ? true : false;
+            });
+        });
+
+        permission = tempPermission;
+    }
 
     /** The permission textually. */
     $: textPermission = (() => {
@@ -90,10 +117,10 @@
                 <input
                 type="text"
                 id="numeric-perm"
-                bind:value="{decimalPermission}"
+                on:input={decimalToBinaryPerm}
+                value={decimalPermission}
                 minlength="3"
                 maxlength="3"
-                readonly
                 />
                 <button type="button" on:click={() => copyValueToClipboard('numeric-perm')} title="Copy">
                     <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
