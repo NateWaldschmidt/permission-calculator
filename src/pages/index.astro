@@ -19,7 +19,7 @@ import PermissionCalculator from '@components/permission-calculator.svelte';
         <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet"> 
         <title>{ pageTitle } | { applicationName }</title>
     </head>
-    <body>
+    <body ontouchstart="">
         <h1>{ pageTitle }</h1>
         <PermissionCalculator client:load></PermissionCalculator>
     </body>
