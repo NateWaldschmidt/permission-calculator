@@ -188,6 +188,8 @@
 
             transition: background-color 300ms ease,
             color 300ms ease;
+            // Prevent highlight on iOS.
+            -webkit-tap-highlight-color: transparent;
         }
 
         input[type="checkbox"] {
