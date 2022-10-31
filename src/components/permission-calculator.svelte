@@ -1,5 +1,5 @@
 <script lang="ts">
-    import PermissionCalculator from "@ts/permission-calculator";
+    import PermissionCalculator from "@lib/permission-calculator";
 
     /** The permission level being calculated as an array of booleans. */
     export let permission = [false,false,false,false,false,false,false,false,false];
