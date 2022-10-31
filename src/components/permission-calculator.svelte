@@ -1,20 +1,13 @@
 <script lang="ts">
+    import PermissionCalculator from "@ts/permission-calculator";
+
     /** The permission level being calculated as an array of booleans. */
     export let permission = [false,false,false,false,false,false,false,false,false];
     /** The permission as a 3 digit decimal. */
     $: decimalPermission = ((): string => {
-        /** The permission level in decimal. */
-        let decimalPermission = '';
-
-        // Loop each group of permissions.
-        for (let i = 0; i < 3; i++) {
-            const binaryString =
-                (permission[0 + i * 3] ? '1' : '0') +
-                (permission[1 + i * 3] ? '1' : '0') +
-                (permission[2 + i * 3] ? '1' : '0');
-            decimalPermission += parseInt(binaryString, 2).toString();
-        }
-        return decimalPermission;
+        /** The permission converted to a binary string. */
+        const binaryString = permission.map(item => item ? 1 : 0).join("");
+        return PermissionCalculator.binaryToDecimal(binaryString);
     })()
     /**
      * Converts the decimal permission into the necessary binary permission.
@@ -22,26 +15,12 @@
      * @param this
      */
     function decimalToBinaryPerm(this: HTMLInputElement) {
-        let decimalPerms = this.value.split('');
         // Ensures the array has 3 numbers.
-        if (decimalPerms.length < 3) {
+        if (this.value.length < 3) {
             return;
         }
-
-        /** A temporary place to set permissions to allow updating all after calcs. */
-        let tempPermission = [...permission];
-
-        /** Convert the array to binary. */
-        decimalPerms.forEach((decimalPerm: string, decimalIndex: number) => {
-            const binaryPerm = Number.parseInt(decimalPerm).toString(2).padStart(3, '0');
-            
-            binaryPerm.split('').forEach((binPerm: string, binaryIndex: number) => {
-                const tempPermIndex = binaryIndex + decimalIndex * 3;
-                tempPermission[tempPermIndex] = binPerm === '1' ? true : false;
-            });
-        });
-
-        permission = tempPermission;
+        const binaryPermission = PermissionCalculator.decimalToBinary(this.value)
+        permission = binaryPermission.split('').map(val => val === '1' ? true : false);
     }
 
     /** The permission textually. */
