@@ -17,9 +17,9 @@ export default class PermissionCalculator {
      * @returns A decimal string representation of the permission level.
      */
     public static binaryToDecimal(binaryPermission: string): string {
-        // Handles when the binary permission is unexpected.
-        if (binaryPermission.length !== 9) {
-            throw `Unexpected length of binary permission '${binaryPermission.length}' instead of '9'.`;
+        // Ensures the binary permission is valid..
+        if (!this.isBinaryPermission(binaryPermission)) {
+            throw `Unexpected binary permission '${binaryPermission}'.`
         }
 
         /** The binary permission level as an array. */
@@ -53,9 +53,9 @@ export default class PermissionCalculator {
      * @returns The binary representation of the decimal permission.
      */
     public static decimalToBinary(decimalPermission: string): string {
-        // Ensures the array has 3 numbers.
-        if (decimalPermission.length !== 3) {
-            throw `Unexpected length of decimal permission '${decimalPermission}' instead of '3'.`;
+        // Ensures the decimal permission is valid.
+        if (!this.isDecimalPermission(decimalPermission)) {
+            throw `Unexpected decimal permission '${decimalPermission}'.`;
         }
 
         /** The decimal permission as an array. */
@@ -77,5 +77,37 @@ export default class PermissionCalculator {
         });
 
         return binaryPermission.join('');
+    }
+
+    /**
+     * Tests the passed in string to see if it is a binary string or not.
+     * 
+     * @example
+     * isBinaryPermission('110')  = true;
+     * isBinaryPermission('123')  = false;
+     * isBinaryPermission('1')    = false;
+     * isBinaryPermission('1234') = false;
+     * isBinaryPermission('0000') = false;
+     * @param binaryString The string to be tested.
+     * @returns True when it is a binary string and false when it is not.
+     */
+    public static isBinaryPermission(binaryString: string): boolean {
+        return new RegExp(/^[10]{9}$/).test(binaryString)
+    }
+
+    /**
+     * Tests the passed in string to see if it is a valid decimal permission string.
+     * 
+     * @example
+     * isDecimalPermission('777')  = true;
+     * isDecimalPermission('123')  = true;
+     * isDecimalPermission('1234') = false;
+     * isDecimalPermission('22')   = false;
+     * isDecimalPermission('888')  = false;
+     * @param decimalString The string to be tested.
+     * @returns True when is is a decimal permission string, false when it is not.
+     */
+    public static isDecimalPermission(decimalString: string): boolean {
+        return new RegExp(/^[01234567]{3}$/).test(decimalString)
     }
 }
